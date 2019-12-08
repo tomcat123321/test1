@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.PostMapper">
+    <select id="getPosts" resultType="com.test.pojo.Post">
+        SELECT * FROM post ORDER BY createDate DESC
+        LIMIT #{from},#{pageSize};
+    </select>
+    <select id="getPost" resultType="com.test.pojo.Post" parameterType="String">
+        SELECT * FROM post
+        <where>
+            <if test="title!=null and title!=''">
+                AND title LIKE CONCAT('%',#{title},'%');
+            </if>
+
+        </where>
+
+    </select>
+</mapper>

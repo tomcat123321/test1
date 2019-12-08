@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>帖子信息如下所示：</h2>
+<div>
+    <ul id="mydiv">
+        <li>帖子标题：<input type="text" name="title" id="title" value=""/></li>
+        <li>内容摘要：<input type="text" name="detail" id="detail" value=""/></li>
+        <li>作者：<input type="text" name="auth" id="auth" value=""/></li>
+        <li>发布时间：<input type="text" name="createDate" id="createDate" value=""/></li>
+    </ul>
+    <p><a href="index.html">返回首页</a></p>
+</div>
+<script src="jquery.js"></script>
+<script>
+    $(function(){
+        var url=location.href;
+        var title=url.substring(url.indexOf("=")+1);
+
+        $.ajax({
+            url:"search",
+            type:"get",
+            data:{"title":title},
+            dataType:"json",
+            success:function (result) {
+                var html="";
+                for(var i=0;i<result.length;i++){
+                    html+="<li>"+result[i].title+"</li>"
+                    html+="<li>"+result[i].detail+"</li>"
+                    html+="<li>"+result[i].auth+"</li>"
+                    html+="<li>"+result[i].createDate+"</li>"
+                }
+                $("#mydiv").html(html);
+            },
+            error:function (result) {
+                alert(result.status);
+            }
+        });
+    })
+</script>
+</body>
+</html>
